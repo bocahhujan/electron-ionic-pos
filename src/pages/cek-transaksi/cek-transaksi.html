@@ -1,0 +1,77 @@
+<!--
+  Generated template for the CekTransaksiPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-toolbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>TRANSAKSI</ion-title>
+  </ion-toolbar>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card class="box">
+
+    <ion-card-content>
+
+      <ion-item>
+        <ion-label>Start</ion-label>
+        <ion-datetime displayFormat="DD MMM, YYYY HH:mm" [(ngModel)]="start"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>End</ion-label>
+        <ion-datetime displayFormat="DD MMM, YYYY HH:mm" [(ngModel)]="end"></ion-datetime>
+      </ion-item>
+
+
+      <button (click)="ambildata()" ion-button color="primary" full>Ambil Data</button>
+
+    </ion-card-content>
+
+  </ion-card>
+
+
+      <ion-card class="box" *ngIf=" transaksi.length >= 1 ">
+        <ion-card-header>
+        Total Transksi Rp {{ total | number }}
+      </ion-card-header>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row class="head">
+              <ion-col text-center >
+                Tanggal
+              </ion-col>
+              <ion-col  text-center >
+                Meja
+              </ion-col>
+              <ion-col  text-center>
+                Total
+              </ion-col>
+            </ion-row>
+
+            <ion-row *ngFor="let or of transaksi">
+              <ion-col  text-center>
+                {{or.tgl}}
+              </ion-col>
+              <ion-col  text-center >
+                {{or.meja}}
+              </ion-col>
+              <ion-col text-center>
+                Rp. {{or.total | number}}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+      </ion-card>
+</ion-content>

@@ -1,0 +1,36 @@
+
+<ion-header>
+  <ion-navbar align-title="center">
+  <ion-toolbar>
+    <ion-title>
+      LOGIN
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <ion-icon name="md-close" ></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <div class="box-login">
+      <ion-list>
+        <ion-item>
+          <ion-label floating>User Name</ion-label>
+          <ion-input name="username" type="text" required [(ngModel)]="dt.username"  (keyup.enter)="logForm()" ngControl="username"  ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>Password</ion-label>
+          <ion-input name="password" type="password" required [(ngModel)]="dt.password"  (keyup.enter)="logForm()" ngControl="password"></ion-input>
+        </ion-item>
+
+      </ion-list>
+      <div class="butonlogin">
+          <button (click)="logForm()" ion-button color="primary" full>Masuk</button>
+      </div>
+
+  </div>
+</ion-content>

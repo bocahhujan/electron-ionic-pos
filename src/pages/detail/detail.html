@@ -1,0 +1,109 @@
+<!--
+  Generated template for the Detail page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar align-title="center">
+    <ion-toolbar>
+      <ion-title>
+        DETAIL ORDER MEJA {{ meja }}
+      </ion-title>
+    </ion-toolbar>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content >
+  <div class="box">
+    <h3 text-center class="meja">Meja : {{meja}}</h3>
+    <p text-center>{{ order.tanggal_transaksi }}</p>
+    <div class="boxlistorder">
+        <ion-grid>
+          <ion-row *ngFor="let ord of detail">
+              <ion-col col-8 no-padding>
+                {{ ord.nama_barang }} x{{ ord.qty}}
+              </ion-col>
+              <ion-col col-4 no-padding>
+                Rp.  {{ ord.harga * ord.qty | number }}
+              </ion-col>
+          </ion-row>
+        </ion-grid>
+    </div>
+
+
+    <ion-grid class="boxtotalharga">
+    <ion-row>
+        <ion-col class="label" col-6 >
+          SUB TOTAL :
+        </ion-col>
+        <ion-col col-6 >
+        Rp.  {{ totalorder | number }}
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col class="label" col-6 >
+          DISCOUNT :
+        </ion-col>
+        <ion-col col-6 >
+
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col class="label" col-6 >
+          PPN :
+        </ion-col>
+        <ion-col col-6 >
+        Rp.  {{ ppn | number }}
+        </ion-col>
+    </ion-row>
+
+    <ion-row>
+        <ion-col class="label" col-6 >
+          TOTAL :
+        </ion-col>
+        <ion-col col-6 >
+        Rp. {{ totalPlusPPN | number }}
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col class="label" col-6 >
+          BAYAR :
+        </ion-col>
+        <ion-col col-6 no-padding>
+        <ion-input type="number" (input)="updateBayar()"  [(ngModel)]="bayar" ></ion-input>
+        </ion-col>
+    </ion-row>
+
+    <ion-row>
+        <ion-col class="label" col-6 >
+          KEMBALI :
+        </ion-col>
+        <ion-col col-6>
+          Rp. {{ kembalian | number }}
+        </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+  <ion-row>
+    <ion-col col-6>
+      <button ion-button icon-start (click)="bayarOrder()" color="secondary" block>
+        <ion-icon name="cash"></ion-icon>
+        Bayar
+      </button>
+    </ion-col>
+    <ion-col col-6>
+      <button ion-button icon-start (click)="goOrder()" color="info" block >
+        <ion-icon name="cart"></ion-icon>
+        Tambah Order
+      </button>
+    </ion-col>
+  </ion-row>
+  <button ion-button icon-start (click)="goRefundOrder()" color="danger" block >
+    <ion-icon name="trash"></ion-icon>
+    Refund
+  </button>
+  </div>
+</ion-content>

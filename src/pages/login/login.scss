@@ -1,0 +1,41 @@
+page-login {
+  .box-login{
+      max-width: 400px;
+      margin: auto;
+  }
+
+  .logodiv{
+      width: 80%;
+      margin: 25px auto;
+      text-align: center;
+  }
+
+  .logodiv img{
+    width: 50%;
+  }
+
+  .item-md ,.item-ios  {padding-left:0;}
+  .list-md > .item-block:first-child {border:0}
+  .list-is > .item-block:first-child {border:0}
+
+  .butonlogin{
+      border-bottom: 1px solid #dedede;
+  }
+
+  .butonlogin .forgetdiv{
+      padding: 10px 0;
+      text-align: left;
+      color: #999999;
+      font-size: 16px;
+  }
+  .boxregister{
+      padding:15px 0;
+      text-align: center;
+      color: #999999;
+      font-size: 16px;
+  }
+
+  .boxregister label{
+      color:#f77f00;
+  }
+}

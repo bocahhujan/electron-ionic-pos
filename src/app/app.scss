@@ -14,3 +14,38 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+ion-menu{
+  .scroll-content{
+    overflow-y: hidden;
+  }
+}
+.toolbar-background{
+  background: #79a4ef;
+  color:#fff;
+}
+
+.toolbar-md{
+  min-height: 5vh;
+}
+
+.toolbar-title{
+  color:#fff;
+}
+
+.bar-button-default-ios , .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default{
+  color:#fff;
+}
+
+ion-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0 90px 1px;
+  width: 100%;
+  height: 40px;
+  text-align: center;
+}
+
+.toolbar-title img{
+  height: 50px;
+}

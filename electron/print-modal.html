@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Rolag Post Bar Order</title>
+
+    <style>
+    @page {
+        margin: 0;
+    }
+    .invoice-box {
+        max-width: 270px;
+        font-size: 10px;
+        font-family: Arial, sans-serif;
+        color: #000;
+    }
+
+    .invoice-box table {
+        width: 100%;
+        line-height: inherit;
+        text-align: left;
+    }
+
+    .invoice-box table td {
+        padding: 5px 2px;
+        vertical-align: top;
+    }
+
+
+    .invoice-box table tr.top table td {
+        padding-bottom: 20px;
+    }
+
+    .invoice-box table tr.top table td.title {
+        font-size: 45px;
+        line-height: 45px;
+        color: #000;
+    }
+
+    .invoice-box table tr.information table td {
+        padding-bottom: 40px;
+    }
+
+    .invoice-box table tr.heading td {
+        background: #eee;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+    }
+
+    .invoice-box table tr.details td {
+        padding-bottom: 20px;
+    }
+
+    .invoice-box table tr.item td{
+        border-bottom: 1px solid #eee;
+    }
+
+    .invoice-box table tr.item.last td {
+        border-bottom: none;
+    }
+
+
+
+
+    </style>
+</head>
+
+<body>
+    <div class="invoice-box">
+            <table id="boxbarang">
+              <tr>
+                  <td>
+                      Tanggal
+                  </td>
+                  <td>
+                    : <span id="timenow"></span>
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      Type
+                  </td>
+                  <td>
+                    : <span id="typemo"></span>
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      Nilai
+                  </td>
+                  <td>
+                    : <span id="nilai"></span>
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      User
+                  </td>
+                  <td>
+                    : <span id="user"></span>
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      Ket
+                  </td>
+                  <td>
+                    : <span id="ket"></span>
+                  </td>
+              </tr>
+            </table>
+
+    </div>
+    <script>
+
+
+      const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni",
+        "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+
+      let data = window.localStorage.getItem('data_in_out');
+      data = JSON.parse(data);
+      //date time now
+      var today = new Date();
+      var dd = today.getDate();
+
+      var yyyy = today.getFullYear();
+      if(dd<10){
+          dd='0'+dd;
+      }
+
+      document.getElementById('timenow').innerHTML = dd+' '+monthNames[today.getMonth()]+' '+yyyy+' / '+today.getHours()+':'+ today.getMinutes();
+      //remove data from temp
+
+      document.getElementById('typemo').innerHTML = data.type ;
+      document.getElementById('nilai').innerHTML = convertToRupiah(data.nilai) ;
+      document.getElementById('user').innerHTML = data.user ;
+      document.getElementById('ket').innerHTML = data.ket ;
+
+
+      function convertToRupiah(angka)
+      {
+      	var rupiah = '';
+      	var angkarev = angka.toString().split('').reverse().join('');
+      	for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
+      	return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
+      }
+    </script>
+</body>
+</html>

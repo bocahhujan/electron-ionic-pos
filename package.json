@@ -1,8 +1,9 @@
 {
-  "name": "big-top",
+  "name": "ROLAG-POS",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "Media Jelajah Nusantara",
+  "homepage": "http://mediajelajahnusantara.com",
+  "main": "electron/main.js",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -10,6 +11,13 @@
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve"
+  },
+"build": {
+    "win":{
+    "target": "nsis",
+    "icon": "dist/icon.png",
+    "publisherName": "Media Jelajah Nusantara"
+    }
   },
   "dependencies": {
     "@angular/animations": "5.2.11",
@@ -27,13 +35,15 @@
     "@ionic/storage": "2.1.3",
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",
+    "ngx-electron": "^1.0.4",
     "rxjs": "5.5.11",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.26"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.10",
-    "typescript": "~2.6.2"
+    "typescript": "~2.6.2",
+    "electron": "^2.0.4"
   },
-  "description": "An Ionic project"
+  "description": "Rolag Point Of Sale"
 }

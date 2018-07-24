@@ -1,0 +1,49 @@
+page-detail {
+  .box{
+    max-width: 500px;
+    margin: auto;
+    background: rgba(224, 224, 224, 0.6196078431372549);
+  }
+
+  .meja{
+    margin: 10px 0 5px 0;
+  }
+
+  .boxlistorder{
+    border-bottom: 2px solid #fff;
+    margin-bottom: 10px;
+    padding: 10px;
+    .row{
+      padding: 5px 0;
+      cursor: pointer;
+    }
+    .col{
+      font-size: 15px;
+      font-weight: 700;
+      height: 20px;
+
+    }
+  }
+
+  .boxtotalharga{
+    .col{
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .row{
+      margin: 5px 0;
+    }
+    .text-input-md{
+      margin: 0;
+      background: #fff;
+      padding: 5px 3px;
+      text-align: center;
+    }
+    .label{
+      text-align: right;
+      padding-right: 10px;
+    }
+  }
+
+
+}

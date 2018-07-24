@@ -1,0 +1,60 @@
+<!--
+  Generated template for the Setting page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-toolbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>SETTING</ion-title>
+  </ion-toolbar>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-item>
+    <ion-label>Server</ion-label>
+    <ion-input type="text" [(ngModel)]="dt.server_url"  ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Jumalah Meja</ion-label>
+    <ion-input type="number" max="10" [(ngModel)]="dt.ruang" ></ion-input>
+  </ion-item>
+
+
+  <ion-item>
+    <ion-label>Print Kasir</ion-label>
+    <ion-select [(ngModel)]="print">
+      <ion-option *ngFor="let pre of print_list"  [value]="pre.name">{{pre.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Print Dapur</ion-label>
+    <ion-select [(ngModel)]="print_dapur">
+      <ion-option *ngFor="let pr of print_list"  [value]="pr.name">{{pr.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Print Bar</ion-label>
+    <ion-select [(ngModel)]="print_bar">
+      <ion-option *ngFor="let pr of print_list"  [value]="pr.name">{{pr.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+
+  <ion-col col-6 padding>
+    <button ion-button icon-start (click)="servData()" full >
+      <ion-icon name="open"></ion-icon>
+      Update
+    </button>
+  </ion-col>
+</ion-content>

@@ -1,0 +1,54 @@
+<!--
+  Generated template for the UpdateOrder page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      UPDATE ORDER
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <ion-icon name="md-close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+<ion-item>
+  <ion-label>Nama</ion-label>
+  <ion-input type="text" [(ngModel)]="dt.nama_barang" disabled="true" ></ion-input>
+</ion-item>
+<ion-item>
+  <ion-label>Qty</ion-label>
+  <ion-input type="number" max="10" [(ngModel)]="dt.qty" ></ion-input>
+</ion-item>
+<ion-item>
+  <ion-label>Note</ion-label>
+  <ion-textarea [(ngModel)]="dt.note" placeholder="Note"></ion-textarea>
+</ion-item>
+
+
+<ion-grid>
+<ion-row>
+    <ion-col col-6 padding>
+      <button ion-button icon-start (click)="hapusOrder()" color="danger" full  >
+        <ion-icon name="trash"></ion-icon>
+        Hapus
+      </button>
+    </ion-col>
+    <ion-col col-6 padding>
+      <button ion-button icon-start (click)="updateOrder()" full >
+        <ion-icon name="open"></ion-icon>
+        Update
+      </button>
+    </ion-col>
+</ion-row>
+</ion-grid>
+
+
+</ion-content>

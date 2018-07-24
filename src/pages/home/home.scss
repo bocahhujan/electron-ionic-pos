@@ -1,3 +1,103 @@
 page-home {
+  .grid{padding: 0}
+  .ion-page > ion-content {
+    background: #f4f4f4;
+  }
+
+  .catbox{
+    background: #f1f1f1;
+    height: 95vh;
+    overflow-x: scroll;
+    .item-md{
+      cursor: pointer;
+    }
+  }
+
+  .contentbox{
+    background: rgba(244, 244, 244, 0.75);
+    height: 95vh;
+    overflow-x: scroll;
+
+    .button{
+      width: 90%;
+      font-size: 60%;
+    }
+  }
+
+  .detailbox{
+    background: rgba(224, 224, 224, 0.6196078431372549);
+    min-height: 95vh;
+  }
+
+  .item-md , .item-ios{
+    background: transparent;
+    text-transform:uppercase;
+    font-weight: 700;
+    font-size: 90%;
+    color: #050d1b;
+    padding: 0;
+  }
+
+  .boxproduk{
+    width: 150px;
+    height: 100px;
+    text-align: center;
+    margin:5px;
+    float: left;
+    border:1px solid #dedede;
+    background: #fff;
+    cursor: pointer;
+  }
+
+  .boxproduk:hover{
+    border:2px solid #2ec95c;
+  }
+
+  .boxproduk .card{
+    height: 15vh;
+  }
+
+  .boxproduk img{
+    width: 100%;
+    max-height: 100%;
+  }
+
+  .boxlistorder{
+    min-height: 40vh;
+    .row{
+      padding: 10px 0;
+      cursor: pointer;
+    }
+    .col{
+      font-size: 15px;
+      font-weight: 700;
+      height: 20px;
+
+    }
+  }
+
+.boxtotalharga{
+  border-top: 2px solid #fff;
+  margin-top: 10px;
+  position: absolute;
+  bottom:1px;
+  .col{
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .row{
+    margin: 0;
+  }
+  .text-input-md{
+    margin: 0;
+    background: #fff;
+    padding: 5px 3px;
+    text-align: center;
+  }
+  .label{
+    text-align: right;
+    padding-right: 10px;
+  }
+}
 
 }

@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Rolag Post Dapur Order</title>
+
+    <style>
+    @page {
+        margin: 0;
+    }
+    .invoice-box {
+        max-width: 270px;
+        font-size: 8px;
+        font-family:  Arial, sans-serif;
+        color: #000;
+    }
+
+    .invoice-box table {
+        width: 100%;
+        line-height: inherit;
+        text-align: left;
+    }
+
+    .invoice-box table td {
+        padding: 2px 2px;
+        vertical-align: top;
+    }
+
+    .invoice-box table tr td:nth-child(2) {
+        text-align: center;
+    }
+
+    .invoice-box table tr.top table td {
+        padding-bottom: 20px;
+    }
+
+    .invoice-box table tr.top table td.title {
+        font-size: 45px;
+        line-height: 45px;
+        color: #000;
+    }
+
+    .invoice-box table tr.information table td {
+        padding-bottom: 40px;
+    }
+
+    .invoice-box table tr.heading td {
+        background: #eee;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+    }
+
+    .invoice-box table tr.details td {
+        padding-bottom: 20px;
+    }
+
+    .invoice-box table tr.item td{
+        border-bottom: 1px solid #eee;
+    }
+
+    .invoice-box table tr.item.last td {
+        border-bottom: none;
+    }
+
+    .invoice-box table tr.total td:nth-child(2) {
+        border-top: 2px solid #eee;
+        font-weight: bold;
+    }
+
+    #note_box{
+      font-size: 11px;
+      text-align: center;
+      margin-top:10px;
+    }
+
+    #mejabox{
+      font-size: 25px;
+      text-align: center;
+      margin: 5px 0;
+      padding: 0;
+    }
+    #kategori{
+      text-align: center;
+      font-size: 13px;
+      font-weight: bold;
+      margin:1px 0;
+      padding: 0;
+    }
+
+    </style>
+</head>
+
+<body>
+    <div class="invoice-box">
+
+      <h1 id="mejabox">MEJA: <span id="nomeja"></span></h1>
+      <p id="kategori"></p>
+      <p style="text-align: center">Created: <span id="timenow"></span></p>
+            <table id="boxbarang">
+              <tr class="heading">
+                  <td>
+                      Item
+                  </td>
+                  <td>
+                    Qty
+                  </td>
+              </tr>
+            </table>
+    <div id="note_box"></div>
+    </div>
+    <script>
+      var ipcRenderer = require('electron').ipcRenderer;
+      ipcRenderer.on('order_dapur', function (event , store) {
+          console.log(store);
+          box = document.getElementById("boxbarang");
+          mejabox = document.getElementById("nomeja");
+
+          let dtorder = store;
+
+          mejabox.innerHTML = window.localStorage.getItem('meja');
+          document.getElementById("timenow").innerHTML = window.localStorage.getItem('tgl_order');
+          document.getElementById("kategori").innerHTML = dtorder.nama_kategori;
+
+          console.log(dtorder);
+          dtorder.list.forEach(function(element) {
+                let dtinbox = '<tr class="item">'
+                    dtinbox += '<td>'
+                    dtinbox +=  element.nama_barang
+                    dtinbox  += '</td>'
+                    dtinbox  += '<td>'
+                    dtinbox  += element.qty
+                    dtinbox  += '</td>'
+                    dtinbox  += '</tr>'
+
+                if(element.note != "" ){
+                      dtinbox += '<tr class="item">'
+                      dtinbox += '<td colspan="2">'
+                      dtinbox += '<strong>*Note : </strong> '+element.note
+                      dtinbox  += '</td>'
+                      dtinbox  += '</tr>'
+                }
+                box.innerHTML += dtinbox ;
+
+              console.log(dtinbox);
+          });
+      });
+
+
+      //remove data from temp
+
+      function convertToRupiah(angka)
+      {
+      	var rupiah = '';
+      	var angkarev = angka.toString().split('').reverse().join('');
+      	for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
+      	return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
+      }
+    </script>
+</body>
+</html>

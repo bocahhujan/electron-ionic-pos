@@ -1,14 +1,133 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+  <ion-navbar align-title="center">
+    <ion-toolbar>
+      <ion-title>
+        PONT OF SALE
+      </ion-title>
+    </ion-toolbar>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-2 class="catbox">
+        <ion-list>
+              <ion-item (click)="getProduk()">ALL</ion-item>
+              <ion-item *ngFor="let cat of catdt" (click)="getProdukbycat(cat.kategori_id)">
+                {{ cat.nama_kategori }}
+              </ion-item>
+        </ion-list>
+      </ion-col >
+      <ion-col col-6 class="contentbox">
+        <ion-searchbar
+        [(ngModel)]="searchinput"
+        [showCancelButton]="shouldShowCancel"
+        (ionInput)="onInput($event)"
+        (ionCancel)="onCancel($event)">
+        </ion-searchbar>
+          <div class="boxproduk" *ngFor="let post of produk" (click)="addorder(post)">
+
+
+              <p style="font-size: 20px;">{{post.nama_barang}}</p>
+
+          </div>
+
+      </ion-col>
+      <ion-col col-4 class="detailbox">
+          <div class="boxlistorder">
+              <ion-grid>
+                <ion-row *ngFor="let order of orderdt" (click)="GoupdateOrder(order)">
+                    <ion-col col-8 no-padding>
+                      {{ order.nama_barang }} x{{ order.qty}}
+                    </ion-col>
+                    <ion-col col-4 no-padding>
+                      Rp.  {{ order.harga * order.qty | number }}
+                    </ion-col>
+                </ion-row>
+              </ion-grid>
+          </div>
+          <ion-grid class="boxtotalharga">
+          <ion-row>
+              <ion-col class="label" col-6 >
+                SUB TOTAL :
+              </ion-col>
+              <ion-col col-6 >
+              Rp.  {{ totalorder | number }}
+              </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col class="label" col-6 >
+                DISCOUNT :
+              </ion-col>
+              <ion-col col-6 >
+
+              </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col class="label" col-6 >
+                PPN :
+              </ion-col>
+              <ion-col col-6 >
+              Rp.  {{ ppn | number }}
+              </ion-col>
+          </ion-row>
+
+          <ion-row>
+              <ion-col class="label" col-6 >
+                TOTAL :
+              </ion-col>
+              <ion-col col-6 >
+              Rp. {{ totalPlusPPN | number }}
+              </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col class="label" col-6 >
+                BAYAR :
+              </ion-col>
+              <ion-col col-6 no-padding>
+              <ion-input type="number" (input)="updateBayar()"  [(ngModel)]="bayar" ></ion-input>
+              </ion-col>
+          </ion-row>
+
+          <ion-row>
+              <ion-col class="label" col-6 >
+                KEMBALI :
+              </ion-col>
+              <ion-col col-6>
+                Rp. {{ kembalian | number }}
+              </ion-col>
+          </ion-row>
+
+
+          <ion-row>
+            <ion-col col-6>
+              <button ion-button icon-start (click)="bayarOrder()" color="secondary" block>
+                <ion-icon name="cash"></ion-icon>
+                Bayar
+              </button>
+            </ion-col>
+            <ion-col col-6>
+              <button ion-button icon-start (click)="submitorder()" color="danger" block >
+                <ion-icon name="cart"></ion-icon>
+                Simpan
+              </button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+          <ion-col>
+            <button ion-button icon-start (click)="hapusallorder()" full >
+              <ion-icon name="trash"></ion-icon>
+              Hapus
+            </button>
+          </ion-col>
+        </ion-row>
+        </ion-grid>
+
+
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>

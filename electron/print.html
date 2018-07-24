@@ -1,0 +1,236 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Rolag Post Nota</title>
+
+    <style>
+    @page {
+        margin: 0;
+    }
+    .invoice-box {
+        max-width: 270px;
+        font-size: 9px;
+        font-family: Arial, sans-serif;
+        color: #000;
+    }
+
+    .invoice-box table {
+        width: 100%;
+        line-height: inherit;
+        text-align: left;
+    }
+
+    .invoice-box table td {
+        padding: 2px;
+        vertical-align: top;
+    }
+
+    .invoice-box table tr td:nth-child(2) {
+        text-align: center;
+    }
+
+    .invoice-box table tr.top table td {
+        padding-bottom: 10px;
+    }
+
+    .invoice-box table tr.top table td.title {
+        font-size: 45px;
+        line-height: 45px;
+        color: #000;
+    }
+
+    .invoice-box table tr.information table td {
+        padding-bottom: 40px;
+    }
+
+    .invoice-box table tr.heading td {
+        background: #eee;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+    }
+
+    .invoice-box table tr.details td {
+        padding-bottom: 5px;
+    }
+
+    .invoice-box table tr.item td{
+        border-bottom: 1px solid #eee;
+    }
+
+    .invoice-box table tr.item.last td {
+        border-bottom: none;
+    }
+
+    .invoice-box table tr.total td:nth-child(3) {
+        font-weight: bold;
+    }
+
+    .logo{
+      width: 100%;
+      margin:10px auto;
+      text-align: center;
+    }
+
+    .logo img{
+      width: 50%;
+    }
+
+    p.alamat{
+      text-align: center;
+      font-size: 11px;
+    }
+    .textHeader{
+      text-align: center;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="invoice-box">
+        <div class="logo">
+          <img src="logo.jpg" >
+        </div>
+        <p class="alamat">Jl. Khairil Anwar No.15-19, Darmo, Surabaya</p>
+        <h3 class="textHeader">Invoice : #<span id="invoiceid"></span></h3>
+        <p>Tanggal : <span id="timenow"></span></p>
+        <p>Meja : <span id="meja"></span></p>
+
+            <table id="boxbarang">
+              <tr class="heading">
+                  <td width="30%">
+                      Item
+                  </td>
+                  <td width="5%">
+                    Qty
+                  </td>
+                  <td>
+                      Price
+                  </td>
+                  <td>
+                      Total
+                  </td>
+              </tr>
+            </table>
+            <table>
+            <tr class="total">
+                <td width="30%"></td>
+                <td></td>
+                <td>Subtotal</td>
+                <td>
+                   : <span id="subtotal"></span>
+                </td>
+            </tr>
+            <tr class="total">
+              <td></td>
+              <td></td>
+                <td> Discount </td>
+                <td>
+                  : <span id="discount"></span>
+                </td>
+            </tr>
+            <tr class="total">
+                <td></td>
+                <td></td>
+                <td>PPN </td>
+                <td>
+                   : <span id="ppn"></span>
+                </td>
+            </tr>
+            <tr class="total">
+              <td></td>
+              <td></td>
+                <td>Total </td>
+                <td>
+                    : <span id="total"></span>
+                </td>
+            </tr>
+            <tr class="total">
+              <td></td>
+              <td></td>
+                <td>Bayar </td>
+                <td>
+                   : <span id="bayar"></span>
+                </td>
+            </tr>
+            <tr class="total">
+              <td></td>
+              <td></td>
+                <td>Kembali </td>
+                <td>
+                   : <span id="kembali"></span>
+                </td>
+            </tr>
+        </table>
+        <h5 style="text-align: center">Terimakasih Atas Kunjungan Anda</h5>
+        <p style="text-align: center" id="timeprint"></p>
+
+    </div>
+    <script>
+      box = document.getElementById("boxbarang");
+      timenow = document.getElementById("timenow");
+      timeprint = document.getElementById("timeprint");
+
+      let order = window.localStorage.getItem('orderdt');
+      let pembayaran = window.localStorage.getItem('pembayaran');
+
+      document.getElementById("invoiceid").innerHTML = window.localStorage.getItem('invoice_id');
+      document.getElementById("meja").innerHTML = window.localStorage.getItem('meja');
+      document.getElementById("timenow").innerHTML = window.localStorage.getItem('tgl_order');
+
+      const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni",
+        "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+
+      pembayaran = JSON.parse(pembayaran);
+      document.getElementById("subtotal").innerHTML = convertToRupiah(pembayaran.subtotal) ;
+      document.getElementById("discount").innerHTML = convertToRupiah(pembayaran.discount) ;
+      document.getElementById("ppn").innerHTML = convertToRupiah(pembayaran.ppn) ;
+      document.getElementById("total").innerHTML = convertToRupiah(pembayaran.total) ;
+      document.getElementById("bayar").innerHTML = convertToRupiah(pembayaran.bayar) ;
+      document.getElementById("kembali").innerHTML = convertToRupiah(pembayaran.kembali) ;
+
+
+      let dtorder = JSON.parse(order);
+      console.log(dtorder);
+      dtorder.forEach(function(element) {
+            let dtinbox = '<tr class="item">'
+                dtinbox += '<td>'
+                dtinbox +=  element.nama_barang
+                dtinbox  += '</td>'
+                dtinbox  += '<td>'
+                dtinbox  += element.qty
+                dtinbox  += '</td>'
+                dtinbox  += '<td>'
+                dtinbox  += convertToRupiah(element.harga)
+                dtinbox  += '</td>'
+                dtinbox  += '<td>'
+                dtinbox  += convertToRupiah(element.harga * element.qty)
+                dtinbox  += '</td>'
+                dtinbox  += '</tr>'
+            box.innerHTML += dtinbox ;
+
+          console.log(dtinbox);
+      });
+
+      //date time now
+      var today = new Date();
+      var dd = today.getDate();
+
+      var yyyy = today.getFullYear();
+      if(dd<10){
+          dd='0'+dd;
+      }
+
+      timeprint.innerHTML = dd+' '+monthNames[today.getMonth()]+' '+yyyy+' / '+today.getHours()+':'+ today.getMinutes();
+      //remove data from temp
+
+      function convertToRupiah(angka)
+      {
+      	var rupiah = '';
+      	var angkarev = angka.toString().split('').reverse().join('');
+      	for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
+      	return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
+      }
+    </script>
+</body>
+</html>
