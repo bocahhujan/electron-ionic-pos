@@ -1,8 +1,8 @@
 {
   "name": "ROLAG-POS",
   "version": "0.0.1",
-  "author": "Media Jelajah Nusantara",
-  "homepage": "http://mediajelajahnusantara.com",
+  "author": "@dikabocah",
+  "homepage": "http://twitter.com/dikabocah",
   "main": "electron/main.js",
   "private": true,
   "scripts": {
