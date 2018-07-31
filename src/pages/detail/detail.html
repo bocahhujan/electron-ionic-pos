@@ -21,12 +21,15 @@
     <p text-center>{{ order.tanggal_transaksi }}</p>
     <div class="boxlistorder">
         <ion-grid>
-          <ion-row *ngFor="let ord of detail">
-              <ion-col col-8 no-padding>
+          <ion-row *ngFor="let ord of detail" >
+              <ion-col col-7 no-padding [class.colorRed]="ord.harga <= 1">
                 {{ ord.nama_barang }} x{{ ord.qty}}
               </ion-col>
-              <ion-col col-4 no-padding>
+              <ion-col col-4 no-padding [class.colorRed]="ord.harga <= 1">
                 Rp.  {{ ord.harga * ord.qty | number }}
+              </ion-col>
+              <ion-col col-1 no-padding>
+                  <ion-icon *ngIf=" ord.harga >= 1 " (click)="go_refund(ord)" name="trash" color="danger"></ion-icon>
               </ion-col>
           </ion-row>
         </ion-grid>

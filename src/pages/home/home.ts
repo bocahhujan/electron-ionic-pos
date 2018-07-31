@@ -128,9 +128,11 @@ export class HomePage {
           nama_barang : dt.nama_barang ,
           harga : dt.harga ,
           qty : parseInt(dt.qty) ,
+          kategori : dt.kategori ,
           jenis: dt.jenis ,
           note : dt.note
       }
+      console.log(dtin);
       this.orderdt[index] = dtin;
 
 
@@ -192,7 +194,7 @@ export class HomePage {
         this.totalorder += total;
         this.ppn =  this.totalorder * 0.1;
         this.totalPlusPPN  = this.totalorder + this.ppn;
-        this.totalPlusPPN = Math.ceil(this.totalPlusPPN);
+        this.totalPlusPPN = Math.ceil(this.totalPlusPPN / 100) * 100;
       })
     }
     //console.log(this.totalorder);
@@ -209,7 +211,7 @@ export class HomePage {
 
   updateBayar(){
     this.kembalian = this.bayar - this.totalPlusPPN;
-    this.kembalian = Math.ceil(this.kembalian);
+    this.kembalian = Math.floor(this.kembalian);
   }
 
   submitorder(){
@@ -351,7 +353,7 @@ export class HomePage {
     window.localStorage.setItem('tgl_order', tlg_now);
 
     if(this._electronService.isElectronApp) {
-      this._electronService.ipcRenderer.send('print-diam' , window.localStorage.getItem('print_kasir'));
+        this._electronService.ipcRenderer.send('print-diam' , window.localStorage.getItem('print_kasir'));
       if(dt_dapur.length >= 1 ){
         this._electronService.ipcRenderer.send('print-diam-dapur' , window.localStorage.getItem('print_dapur') , dt_dapur);
       }

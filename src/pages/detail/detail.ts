@@ -42,9 +42,11 @@ export class Detail {
     this.totalorder = parseInt(this.order.total) ;
     this.ppn = parseInt(this.order.ppn) ;
     this.totalPlusPPN = this.totalorder + this.ppn ;
+    this.totalPlusPPN = Math.ceil(this.totalPlusPPN / 100) * 100;
     this.discount = parseInt(this.order.discount) ;
     this.bayar = parseInt(this.order.uang_diterima) ;
     this.kembalian = this.bayar - this.totalPlusPPN ;
+    this.kembalian = Math.floor(this.kembalian);
     this.meja = this.order.ruang ;
 
   }
@@ -63,6 +65,7 @@ export class Detail {
 
   updateBayar(){
     this.kembalian = this.bayar - this.totalPlusPPN;
+    this.kembalian = Math.floor(this.kembalian);
   }
 
   detail_proses(detail){
@@ -187,6 +190,12 @@ export class Detail {
             alert('Error Revund : '+dt.error);
           }
         });
+  }
+
+  varColors(br){
+    if(br.harga <= 1){
+      return "danger";
+    }
   }
 
   goRefundOrder(){
