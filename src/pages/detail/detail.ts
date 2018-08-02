@@ -157,6 +157,7 @@ export class Detail {
           addnote.onDidDismiss(data => {
             let dt : any = data ;
             this.refund(barang.barang_id  , dt.qty);
+
           });
         }else{
           alert('Maaf anda Tidak memiliki akses');
@@ -184,8 +185,10 @@ export class Detail {
                   this.totalorder = parseInt(this.order.total) ;
                   this.ppn = parseInt(this.order.ppn) ;
                   this.totalPlusPPN = this.totalorder + this.ppn ;
+                  this.totalPlusPPN = Math.ceil(this.totalPlusPPN / 100) * 100;
                   this.discount = parseInt(this.order.discount) ;
                   this.kembalian = this.bayar - this.totalPlusPPN ;
+                  this.kembalian = Math.floor(this.kembalian);
           }else{
             alert('Error Revund : '+dt.error);
           }
