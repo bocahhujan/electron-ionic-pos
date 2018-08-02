@@ -229,7 +229,7 @@ function go_print_dapur(print_name , order , i){
   var bosprintda = [];
   //let print = mainWindow.webContents.getPrinters();
   //console.log(print);
-  bosprintda[i] = new BrowserWindow({width: 800, height: 600 , show: false});
+  bosprintda[i] = new BrowserWindow({width: 800, height: 600 , show: true});
   const startUrl = process.env.ELECTRON_START_URL || url.format({
     pathname: path.join(__dirname, '/print-dapur.html'),
     protocol: 'file:',
@@ -242,7 +242,7 @@ function go_print_dapur(print_name , order , i){
 
   bosprintda[i].webContents.on('did-finish-load', () => {
       bosprintda[i].webContents.send('order_dapur', order);
-      bosprintda[i].webContents.print({silent: true , printBackground : false , deviceName : print_name });
+      bosprintda[i].webContents.print({silent: false , printBackground : false , deviceName : print_name });
       // close window after print order.
       bosprintda[i] = null;
       console.log('print windows');
