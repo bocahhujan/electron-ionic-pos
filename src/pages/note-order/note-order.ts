@@ -17,7 +17,12 @@ export class NoteOrderPage {
   }
 
   simpanNote(){
-    this.viewCtrl.dismiss(this.dt);
+    if(this.dt.qty >= 1 ){
+      this.viewCtrl.dismiss(this.dt);
+    }else{
+      alert('Qty Tidak Boleh kurang dari 1 !');
+    }
+
   }
 
   dismiss() {
