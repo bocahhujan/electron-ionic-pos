@@ -68,6 +68,8 @@ export class Detail {
     this.kembalian = Math.floor(this.kembalian);
   }
 
+
+  //memfilter detail order mana yang di pring dan tidak di print
   detail_proses(detail){
     let men =  new Array ;
     let plus = new Array ;
@@ -105,6 +107,11 @@ export class Detail {
     return jadi ;
   }
 
+  //cek qty barang yang di refund masih ada atau tidak
+  cek_qty_barang(detail , id , qty){
+
+  }
+
   bayarOrder(){
     if(this.bayar >= this.totalPlusPPN ){
         this.apiPost.updateOrder( this.order.transaksi_id , this.bayar , 1 )
@@ -133,10 +140,12 @@ export class Detail {
     }
   }
 
+  //fungsi direct ke halaman order
   goOrder(){
     this.navCtrl.push(HomePage , { meja : this.meja , status : this.order.transaksi_id });
   }
 
+  //fungsi mengecek askses user sebelum refund barang
   go_refund(barang){
     if(window.localStorage.getItem('akses') == 'admin'){
       let addnote = this.modalCtrl.create(NoteOrderPage , { barang : barang});
@@ -167,6 +176,7 @@ export class Detail {
     }
   }
 
+  //fungsi exekusi refund
   refund(id , qty ){
     this.apiPost.go_refund(id , this.order.transaksi_id , qty)
         .then( data => {
@@ -195,12 +205,14 @@ export class Detail {
         });
   }
 
+  //memberi warna pada order apabila refund warna menjadi merah
   varColors(br){
     if(br.harga <= 1){
       return "danger";
     }
   }
 
+  // fungsi refund order
   goRefundOrder(){
     if(window.localStorage.getItem('akses') == 'admin'){
 
@@ -251,6 +263,9 @@ export class Detail {
 
   }
 
+
+
+  //pring nota pembayaran
   PrintOrder(){
     let pembayaran = {
       subtotal : this.totalorder ,
@@ -260,7 +275,8 @@ export class Detail {
       bayar : this.bayar ,
       kembali : this.kembalian
     }
-    //let dtl_order = this.detail_proses(this.detail);
+
+    let dtl_order = this.detail_proses(this.detail);
     const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni",
       "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
 
@@ -272,7 +288,7 @@ export class Detail {
                   tgl_transaki.getMinutes().toString() ;
 
     window.localStorage.setItem('pembayaran',JSON.stringify(pembayaran));
-    window.localStorage.setItem('orderdt',JSON.stringify(this.detail));
+    window.localStorage.setItem('orderdt',JSON.stringify(dtl_order));
     window.localStorage.setItem('meja', this.meja.toString());
     window.localStorage.setItem('invoice_id', this.order.transaksi_id);
     window.localStorage.setItem('tgl_order', tlg_now);
