@@ -108,8 +108,27 @@ export class Detail {
   }
 
   //cek qty barang yang di refund masih ada atau tidak
-  cek_qty_barang(detail , id , qty){
+  cek_qty_barang(id ){
+    let ba_c : any ;
+    let total = 0 ;
+    //filter order sesui dengan id
+    ba_c = this.detail.filter((item) => {
+      if(item.barang_id == id ){
+            return item;
+      }
+    })
 
+    for(let i in ba_c){
+      if(ba_c[i].harga <= 0){
+        total -= parseInt(ba_c[i].qty);
+
+      }else{
+        total += parseInt(ba_c[i].qty);
+
+      }
+    }
+
+    return total;
   }
 
   bayarOrder(){
@@ -152,7 +171,13 @@ export class Detail {
       addnote.present();
       addnote.onDidDismiss(data => {
         let dt : any = data ;
-        this.refund(barang.barang_id , dt.qty);
+        let jml_qty = this.cek_qty_barang(dt.barang_id);
+        if(jml_qty >= 1 ){
+          this.refund(barang.barang_id , dt.qty);
+        }else{
+          alert('Jumlah barang di order sudah habis , tidak bisa di refun !');
+        }
+
       })
 
     }else{
@@ -165,7 +190,12 @@ export class Detail {
           addnote.present();
           addnote.onDidDismiss(data => {
             let dt : any = data ;
-            this.refund(barang.barang_id  , dt.qty);
+            let jml_qty = this.cek_qty_barang(dt.barang_id);
+            if(jml_qty >= 1 ){
+              this.refund(barang.barang_id , dt.qty);
+            }else{
+              alert('Jumlah barang di order sudah habis , tidak bisa di refun !');
+            }
 
           });
         }else{
