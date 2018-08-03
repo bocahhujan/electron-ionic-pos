@@ -108,7 +108,7 @@ export class Detail {
   }
 
   //cek qty barang yang di refund masih ada atau tidak
-  cek_qty_barang(id ){
+  cek_qty_barang(id){
     let ba_c : any ;
     let total = 0 ;
     //filter order sesui dengan id
@@ -169,10 +169,11 @@ export class Detail {
     if(window.localStorage.getItem('akses') == 'admin'){
       let addnote = this.modalCtrl.create(NoteOrderPage , { barang : barang});
       addnote.present();
-      addnote.onDidDismiss(data => {
+      addnote.onDidDismiss( data => {
         let dt : any = data ;
         let jml_qty = this.cek_qty_barang(dt.barang_id);
-        if(jml_qty >= 1 ){
+        console.log(jml_qty+' '+dt.qty);
+        if(jml_qty >= 1 && jml_qty >= dt.qty ){
           this.refund(barang.barang_id , dt.qty);
         }else{
           alert('Jumlah barang di order sudah habis , tidak bisa di refun !');
@@ -191,7 +192,7 @@ export class Detail {
           addnote.onDidDismiss(data => {
             let dt : any = data ;
             let jml_qty = this.cek_qty_barang(dt.barang_id);
-            if(jml_qty >= 1 ){
+            if(jml_qty >= 1 && jml_qty >= dt.qty){
               this.refund(barang.barang_id , dt.qty);
             }else{
               alert('Jumlah barang di order sudah habis , tidak bisa di refun !');
