@@ -2,7 +2,7 @@
   <ion-navbar align-title="center">
     <ion-toolbar>
       <ion-title>
-        PONT OF SALE
+        MEJA {{meja}}
       </ion-title>
     </ion-toolbar>
   </ion-navbar>
@@ -23,8 +23,8 @@
         <ion-searchbar
         [(ngModel)]="searchinput"
         [showCancelButton]="shouldShowCancel"
-        (ionInput)="onInput($event)"
-        (ionCancel)="onCancel($event)">
+        (keyup.enter)="onInput($event)"
+        (ionClear)="onCancel($event)">
         </ion-searchbar>
           <div class="boxproduk" *ngFor="let post of produk" (click)="addorder(post)">
 

@@ -104,6 +104,7 @@ export class HomePage {
   }
 
   onCancel(dt){
+    console.log('get produk');
     this.getProduk();
   }
 
@@ -193,6 +194,7 @@ export class HomePage {
         console.log(total);
         this.totalorder += total;
         this.ppn =  this.totalorder * 0.1;
+        this.ppn =  Math.ceil(this.ppn);
         this.totalPlusPPN  = this.totalorder + this.ppn;
         this.totalPlusPPN = Math.ceil(this.totalPlusPPN / 100) * 100;
       })
