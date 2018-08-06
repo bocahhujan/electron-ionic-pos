@@ -41,6 +41,7 @@ export class Detail {
     console.log(this.detail);
     this.totalorder = parseInt(this.order.total) ;
     this.ppn = parseInt(this.order.ppn) ;
+    this.ppn = Math.ceil(this.ppn);
     this.totalPlusPPN = this.totalorder + this.ppn ;
     this.totalPlusPPN = Math.ceil(this.totalPlusPPN / 100) * 100;
     this.discount = parseInt(this.order.discount) ;
@@ -171,14 +172,15 @@ export class Detail {
       addnote.present();
       addnote.onDidDismiss( data => {
         let dt : any = data ;
-        let jml_qty = this.cek_qty_barang(dt.barang_id);
-        console.log(jml_qty+' '+dt.qty);
-        if(jml_qty >= 1 && jml_qty >= dt.qty ){
-          this.refund(barang.barang_id , dt.qty);
-        }else{
-          alert('Jumlah barang di order sudah habis , tidak bisa di refun !');
+        if(dt.barang_id != ""){
+          let jml_qty = this.cek_qty_barang(dt.barang_id);
+          console.log(jml_qty+' '+dt.qty);
+          if(jml_qty >= 1 && jml_qty >= dt.qty ){
+            this.refund(barang.barang_id , dt.qty);
+          }else{
+            alert('Jumlah barang di order sudah habis , tidak bisa di refun !');
+          }
         }
-
       })
 
     }else{
@@ -191,12 +193,15 @@ export class Detail {
           addnote.present();
           addnote.onDidDismiss(data => {
             let dt : any = data ;
-            let jml_qty = this.cek_qty_barang(dt.barang_id);
-            if(jml_qty >= 1 && jml_qty >= dt.qty){
-              this.refund(barang.barang_id , dt.qty);
-            }else{
-              alert('Jumlah barang di order sudah habis , tidak bisa di refun !');
+            if(dt.barang_id != ""){
+              let jml_qty = this.cek_qty_barang(dt.barang_id);
+              if(jml_qty >= 1 && jml_qty >= dt.qty){
+                this.refund(barang.barang_id , dt.qty);
+              }else{
+                alert('Jumlah barang di order sudah habis , tidak bisa di refun !');
+              }
             }
+
 
           });
         }else{
@@ -225,6 +230,7 @@ export class Detail {
                   toast.present();
                   this.totalorder = parseInt(this.order.total) ;
                   this.ppn = parseInt(this.order.ppn) ;
+                  this.ppn = Math.ceil(this.ppn);
                   this.totalPlusPPN = this.totalorder + this.ppn ;
                   this.totalPlusPPN = Math.ceil(this.totalPlusPPN / 100) * 100;
                   this.discount = parseInt(this.order.discount) ;
