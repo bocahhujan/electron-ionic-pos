@@ -15,7 +15,7 @@ export class NoteOrderPage {
   constructor( public viewCtrl : ViewController , public navParams: NavParams) {
     this.dt = this.navParams.get('barang');
     this.jadi.qty = this.dt.qty;
-    this.jadi.barang_id = this.dt.barang_id;
+    //this.jadi.barang_id = this.dt.barang_id;
   }
 
   ionViewDidLoad() {
@@ -23,7 +23,9 @@ export class NoteOrderPage {
   }
 
   simpanNote(){
-    if(this.dt.qty >= 1 ){
+    console.log(this.jadi.qty);
+    if(parseInt(this.jadi.qty) >= 1){
+      this.jadi.barang_id = this.dt.barang_id ;
       this.viewCtrl.dismiss(this.jadi);
     }else{
       alert('Qty Tidak Boleh kurang dari 1 !');
@@ -32,7 +34,7 @@ export class NoteOrderPage {
   }
 
   dismiss() {
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss(this.jadi);
   }
 
 }
