@@ -32,10 +32,13 @@ export class MyApp {
 
     if(this._electronService.isElectronApp) {
       //this._electronService.ipcRenderer.send('print-diam' , window.localStorage.getItem('print_kasir'));
-      this._electronService.ipcRenderer.on('setting' , function ( event , server_url , ruang) {
+      this._electronService.ipcRenderer.on('setting' , function ( event , server_url , ruang , print_kasir , print_bar , print_dapur) {
         //console.log('data setting : '+ server_url + ruang);
         window.localStorage.setItem('ruang',ruang);
         window.localStorage.setItem('server_url',server_url);
+        window.localStorage.setItem('print_kasir',print_kasir);
+        window.localStorage.setItem('print_bar',print_bar);
+        window.localStorage.setItem('print_dapur',print_dapur);
       });
 
     };

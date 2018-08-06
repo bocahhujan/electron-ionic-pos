@@ -58,7 +58,12 @@ function createWindow () {
     console.log('show');
     //mainWindow.show();
     mainWindow.maximize();
-    mainWindow.webContents.send('setting' , settings.get('data.server_url') , settings.get('data.ruang') );
+    mainWindow.webContents.send('setting' , settings.get('data.server_url') ,
+                                            settings.get('data.ruang') ,
+                                            settings.get('data.print_kasir')  ,
+                                            settings.get('data.print_bar')  ,
+                                            settings.get('data.print_dapur'));
+
   });
 
 }
@@ -253,10 +258,13 @@ function go_print_dapur(print_name , order , i){
     });
 }
 
-ipcMain.on('setting-seve' , (event , server_url , ruang) => {
+ipcMain.on('setting-seve' , (event , server_url , ruang , print , print_bar , print_dapur) => {
   console.log(ruang);
   settings.set('data', {
     server_url: server_url,
-    ruang: ruang
+    ruang: ruang ,
+    print_kasir : print ,
+    print_bar : print_bar ,
+    print_dapur : print_dapur
   });
 });

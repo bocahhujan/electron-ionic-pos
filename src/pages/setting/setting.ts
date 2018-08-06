@@ -37,7 +37,7 @@ export class Setting {
     window.localStorage.setItem('print_dapur',this.print_dapur);
 
     if(this._electronService.isElectronApp) {
-      this._electronService.ipcRenderer.send('setting-seve' ,this.dt.server_url , this.dt.ruang);
+      this._electronService.ipcRenderer.send('setting-seve' ,this.dt.server_url , this.dt.ruang , this.print , this.print_bar , this.print_dapur);
     }
 
     let toast = this.toastCtrl.create({
