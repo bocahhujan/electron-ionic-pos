@@ -12,11 +12,11 @@
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve"
   },
-"build": {
-    "win":{
-    "target": "nsis",
-    "icon": "dist/icon.png",
-    "publisherName": "Media Jelajah Nusantara"
+  "build": {
+    "win": {
+      "target": "nsis",
+      "icon": "dist/icon.png",
+      "publisherName": "Media Jelajah Nusantara"
     }
   },
   "dependencies": {
@@ -33,6 +33,7 @@
     "@ionic-native/splash-screen": "4.8.0",
     "@ionic-native/status-bar": "4.8.0",
     "@ionic/storage": "2.1.3",
+    "electron-settings": "^3.2.0",
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",
     "ngx-electron": "^1.0.4",

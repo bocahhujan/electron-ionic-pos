@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 //import { StatusBar } from '@ionic-native/status-bar';
 //import { SplashScreen } from '@ionic-native/splash-screen';
+import { ElectronService } from 'ngx-electron';
 
 import { Setting } from '../pages/setting/setting';
 import { Table } from '../pages/table/table';
@@ -20,13 +21,24 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(platform: Platform) {
+  constructor(platform: Platform , private _electronService: ElectronService ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       //statusBar.styleDefault();
       //splashScreen.hide();
+
     });
+
+    if(this._electronService.isElectronApp) {
+      //this._electronService.ipcRenderer.send('print-diam' , window.localStorage.getItem('print_kasir'));
+      this._electronService.ipcRenderer.on('setting' , function ( event , server_url , ruang) {
+        //console.log('data setting : '+ server_url + ruang);
+        window.localStorage.setItem('ruang',ruang);
+        window.localStorage.setItem('server_url',server_url);
+      });
+
+    };
 
     if ( Number(window.localStorage.getItem('ruang')) <= 1 ){
       window.localStorage.setItem('ruang','5');

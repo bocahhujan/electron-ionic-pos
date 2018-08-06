@@ -2,6 +2,7 @@
 // https://github.com/electron/electron-quick-start/blob/master/main.js
 
 const electron = require('electron');
+const settings = require('electron-settings');
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -15,6 +16,10 @@ const fs = require('fs');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
+
+//localStorage.setItem('server_url' , settings.get('data.server_url'));
+//localStorage.setItem('ruang' , settings.get('data.ruang'));
+
 
 function createWindow () {
   // Create the browser window.
@@ -53,9 +58,8 @@ function createWindow () {
     console.log('show');
     //mainWindow.show();
     mainWindow.maximize();
-
+    mainWindow.webContents.send('setting' , settings.get('data.server_url') , settings.get('data.ruang') );
   });
-
 
 }
 
@@ -248,3 +252,11 @@ function go_print_dapur(print_name , order , i){
       console.log('print windows');
     });
 }
+
+ipcMain.on('setting-seve' , (event , server_url , ruang) => {
+  console.log(ruang);
+  settings.set('data', {
+    server_url: server_url,
+    ruang: ruang
+  });
+});

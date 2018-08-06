@@ -36,6 +36,10 @@ export class Setting {
     window.localStorage.setItem('print_bar',this.print_bar);
     window.localStorage.setItem('print_dapur',this.print_dapur);
 
+    if(this._electronService.isElectronApp) {
+      this._electronService.ipcRenderer.send('setting-seve' ,this.dt.server_url , this.dt.ruang);
+    }
+
     let toast = this.toastCtrl.create({
       message: 'Setting Tersimpan !',
       duration: 3000 ,
