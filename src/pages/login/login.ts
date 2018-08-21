@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController , LoadingController} from 'ionic-angular';
+import { NavController , LoadingController ,AlertController} from 'ionic-angular';
 
 
 import { ApiPost } from '../../providers/api-post';
@@ -19,7 +19,10 @@ export class LoginPage {
     password : ''
   }
 
-  constructor(public navCtrl: NavController , public apiPost : ApiPost , public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController ,
+              public apiPost : ApiPost ,
+              public alertCtrl: AlertController ,
+              public loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
@@ -27,7 +30,7 @@ export class LoginPage {
   }
 
   logForm(){
-    console.log(window.localStorage.getItem('server_url'));
+    //console.log(window.localStorage.getItem('server_url'));
     if(window.localStorage.getItem('server_url') != '' && window.localStorage.getItem('server_url') != null ){
     this.apiPost.loginPage(this.dt)
         .then( data => {
@@ -37,12 +40,23 @@ export class LoginPage {
             window.localStorage.setItem('akses' , dt.akses);
             this.navCtrl.setRoot(Table);
           }else{
-            alert(dt.error);
+            let alert = this.alertCtrl.create({
+              title: 'Gagal Login',
+              subTitle: dt.error,
+              buttons: ['ok']
+            });
+            alert.present();
           }
 
         })
     }else{
-      alert('Alamat Server Belom di setting , Mohon isi alamat server di menu setting ');
+      let alert = this.alertCtrl.create({
+        title: 'Alamat Server Belom di setting',
+        subTitle: 'Mohon isi alamat server di menu setting',
+        buttons: ['ok']
+      });
+      alert.present();
+
     }
   }
 
