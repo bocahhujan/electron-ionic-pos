@@ -318,30 +318,3 @@ ipcMain.on('simpan-order' , (event , jumlah ) => {
   });
   //console.log(jumlah);
 });
-
-function cek_order(){
-
-    /*var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://'+settings.get('data.server_url')+'/api/order/get_order_belum_bayar');
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            alert('User\'s name is ' + xhr.responseText);
-        }
-        else {
-            alert('Request failed.  Returned status of ' + xhr.status);
-        }
-    };
-    xhr.send(); */
-
-    const {net} = require('electron')
-    let url = 'http://'+settings.get('data.server_url')+'/api/order/get_order_belum_bayar';
-    console.log(url);
-    const request = net.request(url)
-    request.on('response', (response) => {
-      console.log('cek order');
-      console.log('STATUS: '+ response.statusCode);
-      response.on('error', (error) => {
-        console.log('ERROR: '+ JSON.stringify(error))
-      })
-    })
-}
