@@ -27,4 +27,11 @@ page-table {
     cursor: pointer;
   }
 
+  .spinner-md-bubbles circle{
+    fill: #fff;
+  }
+
+  .toLoading{
+    margin-right: 15px;
+  }
 }

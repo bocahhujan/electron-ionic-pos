@@ -12,6 +12,7 @@ const {ipcMain} = require('electron')
 const path = require('path');
 const url = require('url');
 const fs = require('fs');
+const remote  = electron.remote
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -27,6 +28,7 @@ function createWindow () {
   mainWindow = new BrowserWindow({  width: 800,
                                     height: 600 ,
                                     show: false ,
+                                    //frame: false ,
                                     icon: path.join(__dirname, 'icon.png')})
 
 
@@ -41,21 +43,54 @@ function createWindow () {
   // and load the index.html of the app.
   //mainWindow.loadFile('index.html')
 
+  mainWindow.on('close', (e) => {
 
+      let jumlah = settings.get('order.count');
+      if(jumlah == null) jumlah = 0 ;
+      console.log(jumlah);
+      if(jumlah >= 1 ){
+        //cek_order();
+        var choice = electron.dialog.showMessageBox(
+        {
+          type: 'question',
+          buttons: ['Yes', 'No'],
+          title: 'Confirm',
+          message: 'Masih ada order yang belom di bayar, anda yakin ingin keluar dari program ?'
+       });
+
+      }else{
+        //cek_order();
+        var choice = electron.dialog.showMessageBox(
+        {
+          type: 'question',
+          buttons: ['Yes', 'No'],
+          title: 'Confirm',
+          message: 'Anda Yakin Ingin Keluar ?'
+       });
+
+      }
+
+
+     if(choice == 1){
+       e.preventDefault();
+     }
+  });
 
   // Open the DevTools.
   //mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
-  mainWindow.on('closed', function () {
+  mainWindow.on('closed', function (event) {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null
+    //console.log(event);
+    //return false;
   })
 
   mainWindow.once('ready-to-show', () => {
-    console.log('show');
+
     //mainWindow.show();
     mainWindow.maximize();
     mainWindow.webContents.send('setting' , settings.get('data.server_url') ,
@@ -65,6 +100,9 @@ function createWindow () {
                                             settings.get('data.print_dapur'));
 
   });
+
+
+
 
 }
 
@@ -81,6 +119,7 @@ app.on('window-all-closed', function () {
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
     app.quit()
+
   }
 })
 
@@ -91,6 +130,10 @@ app.on('activate', function () {
     createWindow()
   }
 })
+
+app.on('before-quit', () => {
+  return false;
+});
 
 
 
@@ -108,7 +151,6 @@ ipcMain.on('print-diam' , (event , print_name ) => {
       protocol: 'file:',
       slashes: true
     });
-
 
     bosprint.loadURL(startUrl);
     bosprint.webContents.on('did-finish-load', () => {
@@ -268,3 +310,38 @@ ipcMain.on('setting-seve' , (event , server_url , ruang , print , print_bar , pr
     print_dapur : print_dapur
   });
 });
+
+//set order nilai
+ipcMain.on('simpan-order' , (event , jumlah ) => {
+  settings.set('order', {
+    count: jumlah
+  });
+  //console.log(jumlah);
+});
+
+function cek_order(){
+
+    /*var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://'+settings.get('data.server_url')+'/api/order/get_order_belum_bayar');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            alert('User\'s name is ' + xhr.responseText);
+        }
+        else {
+            alert('Request failed.  Returned status of ' + xhr.status);
+        }
+    };
+    xhr.send(); */
+
+    const {net} = require('electron')
+    let url = 'http://'+settings.get('data.server_url')+'/api/order/get_order_belum_bayar';
+    console.log(url);
+    const request = net.request(url)
+    request.on('response', (response) => {
+      console.log('cek order');
+      console.log('STATUS: '+ response.statusCode);
+      response.on('error', (error) => {
+        console.log('ERROR: '+ JSON.stringify(error))
+      })
+    })
+}

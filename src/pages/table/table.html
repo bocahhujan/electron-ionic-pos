@@ -11,6 +11,9 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>POINT OF SALE</ion-title>
+    <ion-buttons class="toLoading" end>
+      <ion-spinner  *ngIf="status != '' "  name="bubbles"></ion-spinner>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
