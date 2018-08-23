@@ -355,7 +355,7 @@ export class HomePage {
     window.localStorage.setItem('tgl_order', tlg_now);
 
     if(this._electronService.isElectronApp) {
-        this._electronService.ipcRenderer.send('print-diam' , window.localStorage.getItem('print_kasir'));
+        this._electronService.ipcRenderer.send('print-diam' , window.localStorage.getItem('print_kasir') , 2);
       if(dt_dapur.length >= 1 ){
         this._electronService.ipcRenderer.send('print-diam-dapur' , window.localStorage.getItem('print_dapur') , dt_dapur);
       }
@@ -411,8 +411,7 @@ export class HomePage {
       window.localStorage.setItem('tgl_order', tlg_now);
 
     if(this._electronService.isElectronApp) {
-      this._electronService.ipcRenderer.send('print-diam' , window.localStorage.getItem('print_kasir') );
-      this._electronService.ipcRenderer.send('print-diam-dua' , window.localStorage.getItem('print_kasir'));
+      this._electronService.ipcRenderer.send('print-diam' , window.localStorage.getItem('print_kasir') , 2 );
 
       if(dt_dapur.length >= 1 ){
         this._electronService.ipcRenderer.send('print-diam-dapur' , window.localStorage.getItem('print_dapur') , dt_dapur);

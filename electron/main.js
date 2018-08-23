@@ -141,48 +141,35 @@ app.on('before-quit', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
-ipcMain.on('print-diam' , (event , print_name ) => {
-    console.log(print_name);
-    //console.log('contetn send');
-    //let print = mainWindow.webContents.getPrinters();
-    //console.log(print);
-    bosprint = new BrowserWindow({width: 800, height: 600 , show: false})
-    const startUrl = process.env.ELECTRON_START_URL || url.format({
-      pathname: path.join(__dirname, '/print.html'),
-      protocol: 'file:',
-      slashes: true
-    });
-
-    bosprint.loadURL(startUrl);
-    bosprint.webContents.on('did-finish-load', () => {
-        bosprint.webContents.print({silent: true , printBackground : false , deviceName : print_name });
-        // close window after print order.
-        bosprint = null;
-        console.log('print windows');
-      });
+ipcMain.on('print-diam' , (event , print_name  , jumlah ) => {
+    console.log(jumlah);
+    var i = 0;
+    while (i < jumlah) {
+      go_print_kasir(print_name , i);
+      i++;
+    }
 });
 
-ipcMain.on('print-diam-dua' , (event , print_name ) => {
-    console.log(print_name);
-    //console.log('contetn send');
-    //let print = mainWindow.webContents.getPrinters();
-    //console.log(print);
-    bosprint2 = new BrowserWindow({width: 800, height: 600 , show: false})
-    const startUrl = process.env.ELECTRON_START_URL || url.format({
-      pathname: path.join(__dirname, '/print.html'),
-      protocol: 'file:',
-      slashes: true
+function go_print_kasir(print_name , i){
+  var bosprint = [];
+  bosprint[i] = new BrowserWindow({width: 800, height: 600 , show: true})
+  const startUrl = process.env.ELECTRON_START_URL || url.format({
+    pathname: path.join(__dirname, '/print.html'),
+    protocol: 'file:',
+    slashes: true
+  });
+
+  bosprint[i].loadURL(startUrl);
+  bosprint[i].webContents.on('did-finish-load', () => {
+      bosprint[i].webContents.print({silent: false , printBackground : false , deviceName : print_name });
+      // close window after print order.
+      bosprint[i] = null;
+      console.log('print windows');
     });
 
 
-    bosprint2.loadURL(startUrl);
-    bosprint2.webContents.on('did-finish-load', () => {
-        bosprint2.webContents.print({silent: true , printBackground : false , deviceName : print_name });
-        // close window after print order.
-        bosprint2 = null;
-        console.log('print windows');
-      });
-});
+}
+
 
 ipcMain.on('print-modal' , (event , print_name ) => {
     console.log(print_name);

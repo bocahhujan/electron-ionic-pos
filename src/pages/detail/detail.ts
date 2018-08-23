@@ -330,7 +330,7 @@ export class Detail {
     window.localStorage.setItem('invoice_id', this.order.transaksi_id);
     window.localStorage.setItem('tgl_order', tlg_now);
     if(this._electronService.isElectronApp) {
-      this._electronService.ipcRenderer.send('print-diam' , window.localStorage.getItem('print_kasir'));
+      this._electronService.ipcRenderer.send('print-diam' , window.localStorage.getItem('print_kasir') , 2);
     }
   }
 
