@@ -99,10 +99,11 @@ function createWindow () {
                                             settings.get('data.print_bar')  ,
                                             settings.get('data.print_dapur'));
 
-  });
+   });
 
-
-
+   settings.set('order', {
+     count: 0
+   });
 
 }
 
