@@ -33,9 +33,16 @@
         <ion-datetime displayFormat="DD MMM, YYYY HH:mm" [(ngModel)]="end"></ion-datetime>
       </ion-item>
 
-
-      <button (click)="ambildata()" ion-button color="primary" full>Ambil Data</button>
-
+    <ion-item>
+      <ion-row>
+        <ion-col>
+          <button (click)="ambildata()" ion-button color="primary" full>Ambil Data</button>
+        </ion-col>
+        <ion-col>
+          <button (click)="printdata()" ion-button color="secondary" full>Print</button>
+        </ion-col>
+      </ion-row>
+    </ion-item>
     </ion-card-content>
 
   </ion-card>

@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Rolag Post Nota</title>
+
+    <style>
+    @page {
+        margin: 0;
+    }
+    .invoice-box {
+        max-width: 270px;
+        font-size: 9px;
+        font-family: Arial, sans-serif;
+        color: #000;
+    }
+
+    .invoice-box table {
+        width: 100%;
+        line-height: inherit;
+        text-align: left;
+    }
+
+    .invoice-box table td {
+        padding: 2px;
+        vertical-align: top;
+    }
+
+    .invoice-box table tr td:nth-child(2) {
+        text-align: center;
+    }
+
+    .invoice-box table tr.top table td {
+        padding-bottom: 10px;
+    }
+
+    .invoice-box table tr.top table td.title {
+        font-size: 45px;
+        line-height: 45px;
+        color: #000;
+    }
+
+    .invoice-box table tr.information table td {
+        padding-bottom: 40px;
+    }
+
+    .invoice-box table tr.heading td {
+        background: #eee;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+    }
+
+    .invoice-box table tr.details td {
+        padding-bottom: 5px;
+    }
+
+    .invoice-box table tr.item td{
+        border-bottom: 1px solid #eee;
+    }
+
+    .invoice-box table tr.item.last td {
+        border-bottom: none;
+    }
+
+    .invoice-box table tr.total td:nth-child(3) {
+        font-weight: bold;
+    }
+
+    .logo{
+      width: 100%;
+      margin:10px auto;
+      text-align: center;
+    }
+
+    .logo img{
+      width: 50%;
+    }
+
+    p.alamat{
+      text-align: center;
+      font-size: 11px;
+    }
+    .textHeader{
+      text-align: center;
+    }
+    .boxsosmed{
+      width: 135px;
+      margin: 0 auto;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="invoice-box">
+        <div class="logo">
+          <img src="logo.jpg" >
+        </div>
+        <p class="alamat">Jl. Khairil Anwar No.15-19, Darmo, Surabaya</p>
+        <!--<h3 class="textHeader">Invoice : #<span id="invoiceid"></span></h3>-->
+        <p>Tanggal : <span id="timenow"></span></p>
+
+            <table id="boxbarang">
+              <tr class="heading">
+                  <td width="30%">
+                      Tanggal
+                  </td>
+                  <td>
+                      Meja
+                  </td>
+                  <td>
+                      Total
+                  </td>
+              </tr>
+            </table>
+
+    </div>
+    <script>
+      box = document.getElementById("boxbarang");
+      timenow = document.getElementById("timenow");
+
+      const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni",
+        "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+        //date time now
+        var today = new Date();
+        var dd = today.getDate();
+
+        var yyyy = today.getFullYear();
+        if(dd<10){
+            dd='0'+dd;
+        }
+
+        document.getElementById('timenow').innerHTML = dd+' '+monthNames[today.getMonth()]+' '+yyyy+' / '+today.getHours()+':'+ today.getMinutes();
+
+        var ipcRenderer = require('electron').ipcRenderer;
+        ipcRenderer.on('transaksi_print', function (event , transaksi) {
+            box = document.getElementById("boxbarang");
+            let dtorder = transaksi;
+
+            console.log(dtorder);
+            dtorder.forEach(function(element) {
+                  let dtinbox = '<tr class="item">'
+                      dtinbox += '<td width="50%">'
+                      dtinbox +=  element.tgl
+                      dtinbox  += '</td>'
+                      dtinbox  += '<td>'
+                      dtinbox  += element.meja
+                      dtinbox  += '</td>'
+                      dtinbox  += '<td>'
+                      dtinbox  += 'Rp. '+convertToRupiah(element.total);
+                      dtinbox  += '</td>'
+                      dtinbox  += '</tr>'
+
+
+                  box.innerHTML += dtinbox ;
+
+                console.log(dtinbox);
+            });
+        });
+
+
+
+      function convertToRupiah(angka)
+      {
+      	var rupiah = '';
+      	var angkarev = angka.toString().split('').reverse().join('');
+      	for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
+      	return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
+      }
+    </script>
+</body>
+</html>

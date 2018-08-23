@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
-import {  NavController, NavParams } from 'ionic-angular';
+import {  NavController, NavParams , AlertController } from 'ionic-angular';
 
-/**
- * Generated class for the CekTransaksiPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { ElectronService } from 'ngx-electron';
+
 import { ApiPost } from '../../providers/api-post';
 @Component({
   selector: 'page-cek-transaksi',
@@ -19,7 +15,11 @@ export class CekTransaksiPage {
   transaksi : any = [] ;
   total : any ;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams , public apiPost : ApiPost) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams ,
+              public apiPost : ApiPost ,
+              public alertCtrl : AlertController,
+              private _electronService: ElectronService) {
   }
 
   ionViewDidLoad() {
@@ -34,9 +34,38 @@ export class CekTransaksiPage {
             this.transaksi = dt.transaksi ;
             this.total = dt.total;
           }else{
-            alert('KOneksi error mohan coba lagi ');
+            alert('Koneksi error mohan coba lagi ');
           }
         });
+  }
+
+  printdata(){
+
+    if(this.transaksi.length > 0){
+      console.log(this.transaksi);
+      let dt_tran = [];
+      var jum = this.transaksi.length;
+      var i = 0 ;
+      while (i < jum) {
+
+          if(!isNaN(this.transaksi[i].meja)){
+            dt_tran.push(this.transaksi[i]);
+          }
+
+          i++;
+      }
+      if(this._electronService.isElectronApp) {
+        this._electronService.ipcRenderer.send('print-transaksi' , window.localStorage.getItem('print_kasir') ,  dt_tran );
+      }
+
+    }else{
+      let alert = this.alertCtrl.create({
+        title: 'Data Belom kosong',
+        subTitle: 'Klik button ambil data terlebih dulu sembelom print data',
+        buttons: ['ok']
+      });
+      alert.present();
+    }
   }
 
 }

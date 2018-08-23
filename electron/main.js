@@ -137,12 +137,12 @@ app.on('before-quit', () => {
 });
 
 
-
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
 ipcMain.on('print-diam' , (event , print_name  , jumlah ) => {
     console.log(jumlah);
+
     var i = 0;
     while (i < jumlah) {
       go_print_kasir(print_name , i);
@@ -152,7 +152,7 @@ ipcMain.on('print-diam' , (event , print_name  , jumlah ) => {
 
 function go_print_kasir(print_name , i){
   var bosprint = [];
-  bosprint[i] = new BrowserWindow({width: 800, height: 600 , show: true})
+  bosprint[i] = new BrowserWindow({width: 800, height: 600 , show: false})
   const startUrl = process.env.ELECTRON_START_URL || url.format({
     pathname: path.join(__dirname, '/print.html'),
     protocol: 'file:',
@@ -161,7 +161,7 @@ function go_print_kasir(print_name , i){
 
   bosprint[i].loadURL(startUrl);
   bosprint[i].webContents.on('did-finish-load', () => {
-      bosprint[i].webContents.print({silent: false , printBackground : false , deviceName : print_name });
+      bosprint[i].webContents.print({silent: true , printBackground : false , deviceName : print_name });
       // close window after print order.
       bosprint[i] = null;
       console.log('print windows');
@@ -169,6 +169,29 @@ function go_print_kasir(print_name , i){
 
 
 }
+
+//print transaksi
+ipcMain.on('print-transaksi' , (event , print_name , data ) => {
+  boxprint = new BrowserWindow({width: 800, height: 600 , show: true});
+  const startUrl = process.env.ELECTRON_START_URL || url.format({
+    pathname: path.join(__dirname, '/print-transaksi.html'),
+    protocol: 'file:',
+    slashes: true
+  });
+
+  //console.log(startUrl);
+
+  boxprint.loadURL(startUrl);
+
+  boxprint.webContents.on('did-finish-load', () => {
+      boxprint.webContents.send('transaksi_print', data);
+      boxprint.webContents.print({silent: false , printBackground : false , deviceName : print_name });
+      // close window after print order.
+      boxprint = null;
+      console.log('print windows');
+    });
+})
+
 
 
 ipcMain.on('print-modal' , (event , print_name ) => {
