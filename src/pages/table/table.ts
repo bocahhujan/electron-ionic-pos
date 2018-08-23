@@ -39,7 +39,7 @@ export class Table {
     if(this.klik){
 
       if(mj.status == 0 ){
-        this.klik = false;
+        //this.klik = false;
         this.navCtrl.push(HomePage , { meja : mj.num , status : 0 });
       }else{
         this.apiPost.getOrderBelomBayar(mj.status)
